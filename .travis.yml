@@ -1,0 +1,34 @@
+language: ruby
+cache:
+- bundler
+install:
+- bundle install
+rvm:
+- 2.0
+- 2.1
+- 2.2
+- 2.3.0
+notifications:
+  email:
+    recipients:
+    - jacobcastello@gmail.com
+    on_success: change
+    on_failure: always
+script:
+- bundle exec rake default
+- gem build sensu-plugins-f5.gemspec
+- gem install sensu-plugins-f5-*.gem
+deploy:
+  provider: rubygems
+  gem: sensu-plugins-f5
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    rvm: 2.3.0
+    repo: champain/sensu-plugins-f5
+addons:
+    code_climate:
+          repo_token:
