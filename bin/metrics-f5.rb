@@ -54,6 +54,28 @@ class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
          description: 'Custom MIBs to load (from custom mib path).',
          default: ''
 
+
+# Here are some thoughts, from TMM
+  # sysGlobalTmmStatClientBytesOut
+  # sysGlobalTmmStatClientPktsOut
+  # sysGlobalTmmStatClientBytesIn
+  # sysGlobalTmmStatClientPktsIn
+  # sysGlobalTmmStatClientCurConns
+  # sysGlobalTmmStatClientMaxConns
+  # sysGlobalTmmStatClientTotConns
+  # sysGlobalTmmStatServerBytesOut
+  # sysGlobalTmmStatServerPktsOut
+  # sysGlobalTmmStatServerBytesIn
+  # sysGlobalTmmStatServerPktsIn
+  # sysGlobalTmmStatServerCurConns
+  # sysGlobalTmmStatServerMaxConns
+  # sysGlobalTmmStatServerTotConns
+  # sysGlobalTmmStatMemoryUsed
+  # sysGlobalTmmStatDroppedPackets
+  # sysGlobalTmmStatIncomingPacketErrors
+  # sysGlobalTmmStatOutgoingPacketErrors
+  # sysGlobalTmmStatHttpRequests
+
   def run
     metrics = {
       '1.3.6.1.4.1.3375.2.1.7.5.2.1.11' => 'cpu.load',
@@ -62,6 +84,25 @@ class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
       '1.3.6.1.4.1.3375.2.1.1.2.20.47.0' => 'swap.used',
       '1.3.6.1.4.1.3375.2.1.1.2.20.46.0' => 'swap.total',
       '1.3.6.1.4.1.3375.2.1.1.2.9.2.0' => 'active.client.connections.ssl',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.6.0' => 'tmm.client.bytes.out',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.4.0' => 'tmm.client.bytes.in',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.5.0' => 'tmm.client.packets.out',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.3.0' => 'tmm.client.packets.in',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.7.0' => 'tmm.client.conns.max',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.8.0' => 'tmm.client.conns.current',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.9.0' => 'tmm.client.conns.total',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.10.0' => 'tmm.server.packets.in',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.11.0' => 'tmm.server.bytes.in',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.12.0' => 'tmm.server.packets.out',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.13.0' => 'tmm.server.bytes.out',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.14.0' => 'tmm.server.conns.max',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.15.0' => 'tmm.server.conns.total',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.16.0' => 'tmm.server.conns.current',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.28.0' => 'tmm.memory.total',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.29.0' => 'tmm.memory.used',
+      '1.3.6.1.4.1.3375.2.1.1.2.21.29.0' => 'tmm.memory.used',
+
+
     }
 
     metrics.each do |objectid, suffix|
