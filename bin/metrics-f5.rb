@@ -13,6 +13,26 @@
 #
 #   check-switchvox-pbx  -h host -C community -p prefix
 #
+# The following MIBs are checked
+# sysGlobalTmmStatClientBytesOut
+# sysGlobalTmmStatClientPktsOut
+# sysGlobalTmmStatClientBytesIn
+# sysGlobalTmmStatClientPktsIn
+# sysGlobalTmmStatClientCurConns
+# sysGlobalTmmStatClientMaxConns
+# sysGlobalTmmStatClientTotConns
+# sysGlobalTmmStatServerBytesOut
+# sysGlobalTmmStatServerPktsOut
+# sysGlobalTmmStatServerBytesIn
+# sysGlobalTmmStatServerPktsIn
+# sysGlobalTmmStatServerCurConns
+# sysGlobalTmmStatServerMaxConns
+# sysGlobalTmmStatServerTotConns
+# sysGlobalTmmStatMemoryUsed
+# sysGlobalTmmStatDroppedPackets
+# sysGlobalTmmStatIncomingPacketErrors
+# sysGlobalTmmStatOutgoingPacketErrors
+# sysGlobalTmmStatHttpRequests
 
 require 'sensu-plugin/metric/cli'
 require 'snmp'
@@ -54,28 +74,6 @@ class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
          description: 'Custom MIBs to load (from custom mib path).',
          default: ''
 
-
-# Here are some thoughts, from TMM
-  # sysGlobalTmmStatClientBytesOut
-  # sysGlobalTmmStatClientPktsOut
-  # sysGlobalTmmStatClientBytesIn
-  # sysGlobalTmmStatClientPktsIn
-  # sysGlobalTmmStatClientCurConns
-  # sysGlobalTmmStatClientMaxConns
-  # sysGlobalTmmStatClientTotConns
-  # sysGlobalTmmStatServerBytesOut
-  # sysGlobalTmmStatServerPktsOut
-  # sysGlobalTmmStatServerBytesIn
-  # sysGlobalTmmStatServerPktsIn
-  # sysGlobalTmmStatServerCurConns
-  # sysGlobalTmmStatServerMaxConns
-  # sysGlobalTmmStatServerTotConns
-  # sysGlobalTmmStatMemoryUsed
-  # sysGlobalTmmStatDroppedPackets
-  # sysGlobalTmmStatIncomingPacketErrors
-  # sysGlobalTmmStatOutgoingPacketErrors
-  # sysGlobalTmmStatHttpRequests
-
   def run
     metrics = {
       '1.3.6.1.4.1.3375.2.1.7.5.2.1.11' => 'cpu.load',
@@ -99,10 +97,7 @@ class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
       '1.3.6.1.4.1.3375.2.1.1.2.21.15.0' => 'tmm.server.conns.total',
       '1.3.6.1.4.1.3375.2.1.1.2.21.16.0' => 'tmm.server.conns.current',
       '1.3.6.1.4.1.3375.2.1.1.2.21.28.0' => 'tmm.memory.total',
-      '1.3.6.1.4.1.3375.2.1.1.2.21.29.0' => 'tmm.memory.used',
-      '1.3.6.1.4.1.3375.2.1.1.2.21.29.0' => 'tmm.memory.used',
-
-
+      '1.3.6.1.4.1.3375.2.1.1.2.21.29.0' => 'tmm.memory.used'
     }
 
     metrics.each do |objectid, suffix|
@@ -124,14 +119,14 @@ class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
               output "#{host}.#{suffix}", vb.value.to_s
             end
           else
-            counter = 0 
+            counter = 0
             manager.walk([objectid.to_s]) do |index|
               counter += 1
-              index.each do |vb|
+              index.each do |vba|
                 if config[:prefix]
-                  output "#{config[:prefix]}.#{host}.#{suffix}.#{counter}", vb.value.to_s
+                  output "#{config[:prefix]}.#{host}.#{suffix}.#{counter}", vba.value.to_s
                 else
-                  output "#{host}.#{suffix}", vb.value.to_s
+                  output "#{host}.#{suffix}", vba.value.to_s
                 end
               end
             end
