@@ -1,3 +1,3 @@
 require 'spec_helper'
-describe MetricsSwitchvox do
+describe MetricsF5 do
 end

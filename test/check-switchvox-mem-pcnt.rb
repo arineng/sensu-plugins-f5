@@ -1,3 +1,3 @@
 require 'spec_helper'
-describe CheckSwitchvoxMemory do
+describe CheckF5Memory do
 end

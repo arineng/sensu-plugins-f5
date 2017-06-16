@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/smbambling/sensu-plugins-f5.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-f5)
 [![Gem Version](https://badge.fury.io/rb/sensu-plugins-f5.svg)](http://badge.fury.io/rb/sensu-plugins-f5)
-[![Code Climate](https://codeclimate.com/github/champain/sensu-plugins-f5/badges/gpa.svg)](https://codeclimate.com/github/champain/sensu-plugins-f5)
-[![Test Coverage](https://codeclimate.com/github/champain/sensu-plugins-f5/badges/coverage.svg)](https://codeclimate.com/github/champain/sensu-plugins-f5)
-[![Dependency Status](https://gemnasium.com/champain/sensu-plugins-f5.svg)](https://gemnasium.com/champain/sensu-plugins-f5)
+[![Code Climate](https://codeclimate.com/github/arineng/sensu-plugins-f5/badges/gpa.svg)](https://codeclimate.com/github/arineng/sensu-plugins-f5)
+[![Test Coverage](https://codeclimate.com/github/arineng/sensu-plugins-f5/badges/coverage.svg)](https://codeclimate.com/github/arineng/sensu-plugins-f5)
+[![Dependency Status](https://gemnasium.com/arineng/sensu-plugins-f5.svg)](https://gemnasium.com/arineng/sensu-plugins-f5)
 
 ## Functionality
 

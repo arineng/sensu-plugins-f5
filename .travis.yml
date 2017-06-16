@@ -28,7 +28,7 @@ deploy:
     rvm: 2.1
     rvm: 2.2
     rvm: 2.3.0
-    repo: champain/sensu-plugins-f5
+    repo: arineng/sensu-plugins-f5
 addons:
     code_climate:
           repo_token:

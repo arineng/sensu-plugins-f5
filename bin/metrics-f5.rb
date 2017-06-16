@@ -2,7 +2,7 @@
 # F5 Device
 # ===
 #
-# Collects Metrics via SNMP for a Switchvox PBX
+# Collects Metrics via SNMP for a F5 PBX
 #   - Sucscription Days Left
 #
 # DEPENDENCIES:
@@ -11,7 +11,7 @@
 #
 # USAGE:
 #
-#   check-switchvox-pbx  -h host -C community -p prefix
+#   metric.f5 -h host -C community -p prefix
 #
 #+--------------------------------------+-----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--+--+--+--+
 #| Name                                 | OID                               | Description                                                                                                                                                                         |  |  |  |  |
@@ -106,7 +106,7 @@ require 'sensu-plugin/metric/cli'
 require 'snmp'
 
 # Class that collects and outputs SNMP metrics in graphite format
-class MetricsSwitchvox < Sensu::Plugin::Metric::CLI::Graphite
+class MetricsF5 < Sensu::Plugin::Metric::CLI::Graphite
   option :host,
          short: '-h host',
          boolean: true,

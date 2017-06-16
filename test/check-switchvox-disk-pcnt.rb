@@ -1,3 +1,3 @@
 require 'spec_helper'
-describe CheckSwitchvoxDisk do
+describe CheckF5Disk do
 end
