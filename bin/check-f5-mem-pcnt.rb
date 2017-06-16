@@ -37,14 +37,28 @@ class CheckF5Memory < Sensu::Plugin::Check::CLI
   option :mem_warn,
          description: 'Warning memory usage percentage threshold',
          short: '-w VALUE',
-         long: '--mem_warning VALUE',
+         long: '--host_mem_warning VALUE',
          default: '85',
          required: true
 
   option :mem_crit,
          description: 'Critical memory usage percentage threshold',
          short: '-c VALUE',
-         long: '--mem_critical VALUE',
+         long: '--host_mem_critical VALUE',
+         default: '90',
+         required: true
+
+  option :mem_warn,
+         description: 'Warning memory usage percentage threshold',
+         short: '-q VALUE',
+         long: '--tmm_mem_warning VALUE',
+         default: '85',
+         required: true
+
+  option :mem_crit,
+         description: 'Critical memory usage percentage threshold',
+         short: '-r VALUE',
+         long: '--tmm_mem_critical VALUE',
          default: '90',
          required: true
 
@@ -64,8 +78,10 @@ class CheckF5Memory < Sensu::Plugin::Check::CLI
 
   def run
     metrics = {
-      '1.3.6.1.4.1.3375.2.1.1.2.1.45.0' => 'mem.used',
-      '1.3.6.1.4.1.3375.2.1.1.2.1.44.0' => 'mem.total',
+      '1.3.6.1.4.1.3375.2.1.1.2.20.3' => 'host.mem.used',
+      '1.3.6.1.4.1.3375.2.1.1.2.20.2' => 'host.mem.total',
+      '1.3.6.1.4.1.3375.2.1.1.2.1.45.0' => 'tmm.mem.used',
+      '1.3.6.1.4.1.3375.2.1.1.2.1.44.0' => 'tmm.mem.total',
       '1.3.6.1.4.1.3375.2.1.1.2.20.47.0' => 'swap.used',
       '1.3.6.1.4.1.3375.2.1.1.2.20.46.0' => 'swap.total'
     }
@@ -85,15 +101,16 @@ class CheckF5Memory < Sensu::Plugin::Check::CLI
       manager.close
     end
 
-    mem_pct_used = ((response_hash['mem.used'] / response_hash['mem.total']) * 100).round.to_i
+    host_mem_pct_used = ((response_hash['host.mem.used'] / response_hash['host.mem.total']) * 100).round.to_i
+    tmm_mem_pct_used = ((response_hash['tmm.mem.used'] / response_hash['tmm.mem.total']) * 100).round.to_i
     swap_pct_used = ((response_hash['swap.used'] / response_hash['swap.total']) * 100).to_i
 
-    if mem_pct_used >= config[:mem_crit].to_i || swap_pct_used >= config[:swap_crit].to_i
-      critical "Active TMM Memory Usage: #{mem_pct_used}% -- Swap Usage: #{swap_pct_used}%"
-    elsif mem_pct_used >= config[:mem_warn].to_i || swap_pct_used >= config[:swap_warn].to_i
-      warning "Active TMM Memory Usage: #{mem_pct_used}% -- Swap Usage: #{swap_pct_used}%"
+    if tmm_mem_pct_used >= config[:mem_crit].to_i || host_mem_pct_used >= config[:mem_crit].to_i || swap_pct_used >= config[:swap_crit].to_i
+      critical "TMM Memory Usage: #{tmm_mem_pct_used}% -- Host Memory Usage #{host_mem_pct_used}% -- Host Swap Usage: #{swap_pct_used}%"
+    elsif tmm_mem_pct_used >= config[:mem_warn].to_i || host_mem_pct_used >= config[:mem_warn].to_i || swap_pct_used >= config[:swap_warn].to_i
+      warning "TMM Memory Usage: #{tmm_mem_pct_used}% -- Host Memory Usage #{host_mem_pct_used}% -- Host Swap Usage: #{swap_pct_used}%"
     else
-      ok "Active TMM Memory Usage: #{mem_pct_used}% -- Swap Usage: #{swap_pct_used}%"
+      ok "TMM Memory Usage: #{tmm_mem_pct_used}% -- Host Memory Usage #{host_mem_pct_used}% -- Host Swap Usage: #{swap_pct_used}%"
     end
   end
 end
