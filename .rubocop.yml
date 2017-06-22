@@ -1,4 +1,4 @@
-
+---
 MethodLength:
   Max: 200
 
@@ -28,3 +28,6 @@ RegexpLiteral:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Max: 40
